@@ -58,14 +58,20 @@ def create_plot(c_cr, c_eou, c_eol, c_all):
     fig, ax = plt.subplots(figsize=(10, 6))
     
     # stacked bar plot
-    ax.bar(unique_values, freq_reason_1, label='CR', color='white', edgecolor='black', hatch='xx')
+    ax.bar(unique_values, freq_reason_1, label='CR', color='white', edgecolor='black', hatch='//')
     ax.bar(unique_values, freq_reason_2, bottom=freq_reason_1, label='EoU', color='white', edgecolor='black', hatch='\\\\')
-    ax.bar(unique_values, freq_reason_3, bottom=np.array(freq_reason_1) + np.array(freq_reason_2), label='EoL', color='white', edgecolor='black', hatch='//')
+    ax.bar(unique_values, freq_reason_3, bottom=np.array(freq_reason_1) + np.array(freq_reason_2), label='EoL', color='white', edgecolor='black', hatch='xx')
 
     # set ax
     ax.set_xlabel('period')
     xticks = [i for i in range(0, 18)]
     ax.set_xticks(xticks)
+    
+    # adjust y
+    total_heights = np.array(freq_reason_1) + np.array(freq_reason_2) + np.array(freq_reason_3)
+    max_height = total_heights.max()
+    ax.set_ylim(0, max_height * 1.05)
+
     
     # change labels
     ax.set_xticklabels([str(i + 1) for i in xticks])
