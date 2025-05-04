@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
 
@@ -20,7 +21,7 @@ def geometrical_cdf_piecwise(t):
     
     p = 0.03610458219651225
     
-    return 1-(1-p)**(t-3) * (1-0.35) # hier minus 3, a python nullbasiert
+    return 0.35 + 0.65*(1-(1-p)**(t-3))
 
 def conditional_probability(F_t, F_t_1):
     return (F_t - F_t_1) / (1- F_t_1)
@@ -30,7 +31,7 @@ def create_transition_table():
     global _transition_matrix
     if _transition_matrix is None:
 
-        # PDF
+        # CDF
         wear_in = {0:0.15, 1:0.25, 2:0.32, 3:0.35} #F(0),F(1),F(2),F(3)
         random = {i:geometrical_cdf_piecwise(i) for i in range(4, 14)}
         wear_out = {14:0.65, 15:0.80, 16:1}
@@ -110,6 +111,12 @@ if __name__ == '__main__':
 
     
     
+
+    
+    
+    
+    
+
 
     
     
