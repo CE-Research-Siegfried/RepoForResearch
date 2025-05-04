@@ -13,9 +13,6 @@ def core_quality():
      else:
          return [0.15, 0.85]
         
-def remanufactureable(probabilites):
-    
-    return np.random.choice([1, 0], p=probabilites)
 
 def geometrical_cdf_piecwise(t):
     
@@ -57,20 +54,20 @@ def get_transition_matrix(t):
         
         use_CR, use_EoU, use_EoL = 0.0914, transition_table[t]['conditional_probability'], 0 
         use_use = 1 - use_CR - use_EoU - use_EoL
-        EoU_U = remanufactureable(core_quality())
+        EoU_U = core_quality()[0]
 
         matrix = [[use_use, use_CR, use_EoU, use_EoL],
              [0.95, 0.0, 0.05, 0.00],
-             [1-EoU_U, 0.0, 0.0, EoU_U],
+             [EoU_U, 0.0, 0.0, 1-EoU_U],
              [0, 0.0, 0.0, 1]]
         
     elif t == 17:
         
-        EoU_U = remanufactureable(core_quality())
+        EoU_U = core_quality()[0]
 
         matrix = [[0, 0, 0, 0],
              [0.0, 0.0, 0.00, 0.00],
-             [1-EoU_U, 0.0, 0.0, EoU_U],
+             [EoU_U, 0.0, 0.0, 1-EoU_U],
              [0, 0.0, 0.0, 0]]
            
     else:
@@ -82,7 +79,7 @@ def get_transition_matrix(t):
         use_EoL = 0
         use_use = 1 - use_CR - use_EoU - use_EoL
                 
-        EoU_U = remanufactureable(core_quality())
+        EoU_U = core_quality()[0]
 
         matrix = [[use_use, use_CR, use_EoU, use_EoL],
              [0.95, 0.0, 0.05, 0.00],
@@ -111,12 +108,6 @@ if __name__ == '__main__':
 
     
     
-
-    
-    
-    
-    
-
 
     
     
